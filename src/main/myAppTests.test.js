@@ -1,6 +1,6 @@
 // test/js/CalculatorExtra.test.js
 
-import { Calculator } from './my-app/src/main/js/calculator.js';
+import { Calculator } from '../../../my-app/src/main/js/calculator.js';
 
 QUnit.module('Calculator - Additional Tests');
 
