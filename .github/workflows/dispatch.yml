@@ -33,24 +33,24 @@ jobs:
           # Replace with your actual test command if needed
           npm test
 
-          - name: Report status back to my-app PR
-          if: always()  # Run this step even if previous steps fail
-          env:
-            GH_TOKEN: ${{ secrets.STATUS_TOKEN }}   # PAT with 'repo:status' scope in my-app
-            SHA: ${{ github.event.client_payload.pr_sha }}
-            REPO: modihimanshu-36/my-app
-            STATUS: ${{ job.status }}
-          run: |
-            if [ "$STATUS" = "success" ]; then
-              STATE="success"
-              DESC="Qual tests passed"
-            else
-              STATE="failure"
-              DESC="Qual tests failed"
-            fi
-        
-            curl -X POST \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              https://api.github.com/repos/$REPO/statuses/$SHA \
-              -d "{\"state\":\"$STATE\",\"context\":\"qual-check\",\"description\":\"$DESC\"}"
+      - name: Report status back to my-app PR
+        if: always()  # Run this step even if previous steps fail
+        env:
+          GH_TOKEN: ${{ secrets.STATUS_TOKEN }}   # PAT with 'repo:status' scope in my-app
+          SHA: ${{ github.event.client_payload.pr_sha }}
+          REPO: modihimanshu-36/my-app
+          STATUS: ${{ job.status }}
+        run: |
+          if [ "$STATUS" = "success" ]; then
+            STATE="success"
+            DESC="Qual tests passed"
+          else
+            STATE="failure"
+            DESC="Qual tests failed"
+          fi
+      
+          curl -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/$REPO/statuses/$SHA \
+            -d "{\"state\":\"$STATE\",\"context\":\"qual-check\",\"description\":\"$DESC\"}"
