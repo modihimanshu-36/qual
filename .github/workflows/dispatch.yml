@@ -31,4 +31,4 @@ jobs:
       - name: Run qual tests for my-app (just printing a message for now)
         run: |
           # Replace with your actual test command if needed
-          echo "New job started because of dispatch event"
+          npm test
